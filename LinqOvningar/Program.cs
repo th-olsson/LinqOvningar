@@ -137,6 +137,24 @@ namespace LinqOvningar
             var studentId5 = studenter.Single(s => s.Id == 5);
             Console.WriteLine("Student med ID 5:");
             Console.WriteLine(StudentToString(studentId5) + "\n");
+
+            // Sum / Average / Min / Max
+            Title("Sum / Average / Min / Max");
+
+            // - Summera alla poäng
+            var summa = studenter.Sum(s => s.Poang);
+            Console.WriteLine($"Summan av alla poäng: {summa}\n");
+
+            // - Räkna ut medelpoäng
+            var medel = studenter.Average(s => s.Poang);
+            Console.WriteLine($"Medelpoäng: {medel}\n");
+
+            // - Hitta lägsta och högsta poäng
+            var minsta = studenter.Min(s => s.Poang);
+            Console.WriteLine($"Minsta poäng: {minsta}\n");
+
+            var hogsta = studenter.Max(s => s.Poang);
+            Console.WriteLine($"Högsta poäng: {hogsta}\n");
         }
     }
 }
