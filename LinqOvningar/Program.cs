@@ -76,6 +76,17 @@ namespace LinqOvningar
             // - Sortera studenter efter poäng, högst först
             var studenterEfterPoang = studenter.OrderByDescending(s => s.Poang);
             PrintList("Sorterade efter poäng", studenterEfterPoang, StudentToString);
+
+            // Count
+            Title("Count");
+
+            // - Räkna hur många studenter som finns
+            var antalStudenter = studenter.Count();
+            Console.WriteLine($"Antal studenter: {antalStudenter}");
+
+            // - Räkna hur många som går i klass A
+            var antalStudenterKlassA = studenter.Where(s => s.Klass == "A").Count();
+            Console.WriteLine($"Antal studenter: {antalStudenterKlassA}");
         }
     }
 }
