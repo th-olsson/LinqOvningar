@@ -108,6 +108,17 @@ namespace LinqOvningar
             // - Visa alla unika åldrar
             var unikaAldrar = studenter.Select(s => s.Alder).Distinct().Order();
             PrintList("Unika åldrar", unikaAldrar, alder => alder.ToString());
+
+            // Any / All
+            Title("Any / All");
+
+            // - Finns det någon student med 100 poäng?
+            var studentMed100PoangExisterar = studenter.Any(s => s.Poang == 100);
+            Console.WriteLine("Finns det någon student med 100 poäng?: {0}", studentMed100PoangExisterar ? "Ja" : "Nej");
+
+            // - Har alla studenter minst 50 poäng?
+            var allaStudenterHarMinst50Poang = studenter.All(s => s.Poang >= 50);
+            Console.WriteLine("Har alla studenter minst 50 poäng?: {0}\n", allaStudenterHarMinst50Poang ? "Ja" : "Nej");
         }
     }
 }
