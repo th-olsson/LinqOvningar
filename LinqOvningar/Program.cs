@@ -1,4 +1,6 @@
-﻿namespace LinqOvningar
+﻿using static LinqOvningar.Program;
+
+namespace LinqOvningar
 {
     internal class Program
     {
@@ -11,21 +13,15 @@
             public int Poang { get; set; }
         }
 
-        public static void Print(string description, List<Student> students)
+
+        public static void PrintList<T>(string description, IEnumerable<T> items, Func<T, string> format)
         {
             Console.WriteLine($"{description}:");
-            if (students.Count > 0)
+            foreach (T item in items)
             {
-                foreach (Student s in students)
-                {
-                    Console.WriteLine($"- {s.Namn}");
-                }
+                Console.WriteLine($"- {format(item)}");
             }
-            else
-            {
-                Console.WriteLine($"Inga studenter");
-            }
-            Console.WriteLine("");
+            Console.WriteLine();
         }
 
         static void Main(string[] args)
@@ -42,16 +38,28 @@
                     new Student { Id = 7, Namn = "Gustav", Alder = 23, Klass = "C", Poang = 58 },
                     new Student { Id = 8, Namn = "Hanna", Alder = 20, Klass = "B", Poang = 95 }
                 };
-            Console.WriteLine("LI NQ-ÖVNINGAR MED STUDENTER\n");
+            Console.WriteLine("LINQ-ÖVNINGAR MED STUDENTER\n");
 
             // Where
+
             // - Hämta alla studenter som är äldre än 20
-            var studenterAlderOver20 = studenter.Where(s => s.Alder > 20).ToList();
-            Print("Studenter äldre än 20", studenterAlderOver20);
+            var studenterAlderOver20 = studenter.Where(s => s.Alder > 20);
+            PrintList("Studenter äldre än 20", studenterAlderOver20, s => s.Namn);
 
             // - Hämta alla studenter som har mer än 80 poäng.
             var studenterPoangOver80 = studenter.Where(s => s.Poang > 80);
-            Print("Studenter med mer än 80 poäng", studenterAlderOver20);
+            PrintList("Studenter med mer än 80 poäng", studenterPoangOver80, s => s.Namn);
+
+
+            // Select
+
+            // - Visa bara namnen på alla studenter
+            var studenterNamn = studenter.Select(s => s.Namn);
+            PrintList("Alla studenter", studenterNamn, name => name);
+
+            // - Visa namn och poäng i en ny anonym typ
+            var studenterNamnOchPoang = studenter.Select(s => new { s.Namn, s.Poang });
+            PrintList("Namn och poäng", studenterNamnOchPoang, s => $"{s.Namn} {s.Poang}p");
         }
     }
 }
