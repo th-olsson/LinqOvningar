@@ -119,6 +119,24 @@ namespace LinqOvningar
             // - Har alla studenter minst 50 poäng?
             var allaStudenterHarMinst50Poang = studenter.All(s => s.Poang >= 50);
             Console.WriteLine("Har alla studenter minst 50 poäng?: {0}\n", allaStudenterHarMinst50Poang ? "Ja" : "Nej");
+
+            // FirstOrDefault / Last / Single
+            Title("FirstOrDefault / Last / Single");
+
+            // - Hämta första studenten i klass B
+            var forstaStudentenIKlassB = studenter.First(s => s.Klass == "B");
+            Console.WriteLine("Första studenten i klass B:");
+            Console.WriteLine(StudentToString(forstaStudentenIKlassB) + "\n");
+
+            // - Hämta sista studenten i listan
+            var sistaStudenten = studenter.Last();
+            Console.WriteLine("Sista studenten i listan:");
+            Console.WriteLine(StudentToString(sistaStudenten) + "\n");
+
+            // - Hämta studenten med ett visst Id
+            var studentId5 = studenter.Single(s => s.Id == 5);
+            Console.WriteLine("Student med ID 5:");
+            Console.WriteLine(StudentToString(studentId5) + "\n");
         }
     }
 }
