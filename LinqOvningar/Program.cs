@@ -23,8 +23,7 @@ namespace LinqOvningar
             }
             Console.WriteLine();
         }
-        static string StudentToString(Student s) =>
-    $"Namn: {s.Namn}, Ålder: {s.Alder}, Klass: {s.Klass}, Poäng: {s.Poang}";
+        static string StudentToString(Student s) => $"Namn: {s.Namn}, Ålder: {s.Alder}, Klass: {s.Klass}, Poäng: {s.Poang}";
         static void Title(string text) => Console.WriteLine($"=== {text} ===\n");
 
         static void Main(string[] args)
@@ -86,7 +85,18 @@ namespace LinqOvningar
 
             // - Räkna hur många som går i klass A
             var antalStudenterKlassA = studenter.Where(s => s.Klass == "A").Count();
-            Console.WriteLine($"Antal studenter: {antalStudenterKlassA}");
+            Console.WriteLine($"Antal studenter: {antalStudenterKlassA}\n");
+
+            // Take
+            Title("Take");
+
+            // - Ta ut de tre första studenterna
+            var treForstaStudenter = studenter.Take(3);
+            PrintList("Tre första studenterna", treForstaStudenter, StudentToString);
+
+            // - Ta ut de två bästa poängen efter sortering
+            var tvaBastaPoangen = studenter.OrderByDescending(s => s.Poang).Take(2);
+            PrintList("De två bästa poängen", tvaBastaPoangen, s => s.Poang.ToString());
         }
     }
 }
