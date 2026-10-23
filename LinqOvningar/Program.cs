@@ -59,7 +59,7 @@ namespace LinqOvningar
 
             // - Visa bara namnen på alla studenter
             var studenterNamn = studenter.Select(s => s.Namn);
-            PrintList("Namn", studenterNamn, name => name);
+            PrintList("Namn", studenterNamn, namn => namn);
 
             // - Visa namn och poäng i en ny anonym typ
             var studenterNamnOchPoang = studenter.Select(s => new { s.Namn, s.Poang });
@@ -97,6 +97,17 @@ namespace LinqOvningar
             // - Ta ut de två bästa poängen efter sortering
             var tvaBastaPoangen = studenter.OrderByDescending(s => s.Poang).Take(2);
             PrintList("De två bästa poängen", tvaBastaPoangen, s => s.Poang.ToString());
+
+            // Distinct
+            Title("Distinct");
+
+            // - Visa alla unika klassnamn
+            var unikaKlassNamn = studenter.Select(s => s.Klass).Distinct();
+            PrintList("Unika klassnamn", unikaKlassNamn, klass => klass);
+
+            // - Visa alla unika åldrar
+            var unikaAldrar = studenter.Select(s => s.Alder).Distinct().Order();
+            PrintList("Unika åldrar", unikaAldrar, alder => alder.ToString());
         }
     }
 }
