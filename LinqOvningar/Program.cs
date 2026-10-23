@@ -14,7 +14,7 @@ namespace LinqOvningar
         }
 
 
-        public static void PrintList<T>(string description, IEnumerable<T> items, Func<T, string> format)
+        static void PrintList<T>(string description, IEnumerable<T> items, Func<T, string> format)
         {
             Console.WriteLine($"{description}:");
             foreach (T item in items)
@@ -23,6 +23,9 @@ namespace LinqOvningar
             }
             Console.WriteLine();
         }
+        static string StudentToString(Student s) =>
+    $"Namn: {s.Namn}, Ålder: {s.Alder}, Klass: {s.Klass}, Poäng: {s.Poang}";
+        static void Title(string text) => Console.WriteLine($"=== {text} ===\n");
 
         static void Main(string[] args)
         {
@@ -41,25 +44,38 @@ namespace LinqOvningar
             Console.WriteLine("LINQ-ÖVNINGAR MED STUDENTER\n");
 
             // Where
+            Title("Where");
 
             // - Hämta alla studenter som är äldre än 20
             var studenterAlderOver20 = studenter.Where(s => s.Alder > 20);
-            PrintList("Studenter äldre än 20", studenterAlderOver20, s => s.Namn);
+            PrintList("Äldre än 20", studenterAlderOver20, StudentToString);
 
             // - Hämta alla studenter som har mer än 80 poäng.
             var studenterPoangOver80 = studenter.Where(s => s.Poang > 80);
-            PrintList("Studenter med mer än 80 poäng", studenterPoangOver80, s => s.Namn);
+            PrintList("Mer än 80 poäng", studenterPoangOver80, StudentToString);
 
 
             // Select
+            Title("Select");
 
             // - Visa bara namnen på alla studenter
             var studenterNamn = studenter.Select(s => s.Namn);
-            PrintList("Alla studenter", studenterNamn, name => name);
+            PrintList("Namn", studenterNamn, name => name);
 
             // - Visa namn och poäng i en ny anonym typ
             var studenterNamnOchPoang = studenter.Select(s => new { s.Namn, s.Poang });
             PrintList("Namn och poäng", studenterNamnOchPoang, s => $"{s.Namn} {s.Poang}p");
+
+            // OrderBy
+            Title("OrderBy");
+
+            // - Sortera studenter efter ålder
+            var studenterEfterAlder = studenter.OrderBy(s => s.Alder);
+            PrintList("Sorterade efter ålder", studenterEfterAlder, StudentToString);
+
+            // - Sortera studenter efter poäng, högst först
+            var studenterEfterPoang = studenter.OrderByDescending(s => s.Poang);
+            PrintList("Sorterade efter poäng", studenterEfterPoang, StudentToString);
         }
     }
 }
